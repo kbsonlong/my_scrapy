@@ -53,3 +53,6 @@
 ## [Scrapy redis去重](https://www.jianshu.com/p/7b6c1754ee73)
 
 ## [Scrapy 存入Mysql数据库](https://www.along.party/?p=2405)
+
+## [Scrapy命令行](http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/commands.html)
+https://www.cnblogs.com/weixuqin/p/8431314.html
