@@ -14,7 +14,8 @@ class PagesPipeline(object):
     def __init__(self):
         self.file = open(r'%s/job_info.txt' % (BASE_PATH), 'wb')
         # 打开数据库连接
-        self.db = MySQLdb.connect("localhost", "testuser", "test123", "TESTDB", charset='utf8')
+        #self.db = MySQLdb.connect("localhost", "root", "kbsonlong", "cmdb", port=8080, charset='utf8')
+        self.db = MySQLdb.connect(host="www.along.party", port=8080, user="root", passwd="kbsonlong", db="cmdb", charset="utf8", use_unicode=True)
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item)) + "\n"
