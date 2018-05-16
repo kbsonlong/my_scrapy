@@ -32,7 +32,6 @@ class DmozSpider(scrapy.Spider):
         job_location = job_info.find('p', {'class': 'basic-infor'}).span.get_text()
         job_salary = job_info.find('p', {'class': 'job-item-title'}).get_text()
         job_qualifications = job_info.find('div', {'class': 'job-qualifications'}).select("span")
-        # print job_qualifications,type(job_qualifications)
         job_edu = job_qualifications[0].get_text()
         language = job_qualifications[2].get_text()
         work_year = job_qualifications[1].get_text()
