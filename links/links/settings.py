@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'links.pipelines.LinksPipeline': 300,
+   'links.pipelines.PagesPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
