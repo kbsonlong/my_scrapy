@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'links.pipelines.PagesPipeline': 300,
+   'links.pipelines.MSQLPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,3 +90,8 @@ HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 SAVE_FILE='links.txt'
+MYSQL_HOST='www.along.party'
+MYSQL_DBNAME='cmdb'
+MYSQL_USER='root'
+MYSQL_PASSWORD='kbsonlong'
+MYSQL_PORT=8080

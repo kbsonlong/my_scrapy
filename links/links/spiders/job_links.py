@@ -11,7 +11,6 @@ class DmozSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        filename = 'links.txt'
         soups = BeautifulSoup(response.body,'lxml')
         jobObj = soups.find('ul',{'class':'sojob-list'})
         jobs = jobObj.findAll('li')
