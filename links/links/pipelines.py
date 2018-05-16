@@ -11,11 +11,6 @@ import MySQLdb
 import MySQLdb.cursors
 
 BASE_PATH = os.path.abspath('..')
-import ConfigParser
-
-config = ConfigParser.RawConfigParser()
-cf=config.read('config.cfg')
-
 
 
 class LinksPipeline(object):
