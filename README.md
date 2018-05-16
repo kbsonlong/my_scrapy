@@ -3,5 +3,5 @@
 
 #Scrapy架构
 
-![image](scrapy.png)
+![image](/links/scrapy.png)
 
