@@ -1,3 +1,5 @@
+#coding: utf8
+
 import scrapy
 from bs4 import BeautifulSoup
 from links.items import LinksItem
@@ -18,6 +20,7 @@ class DmozSpider(scrapy.Spider):
             job_info  = job.find('div',{'class':'job-info'})
             item = LinksItem()
             # item['title'] = job_info.h3.get_text()
+            ###获取到link,回调函数parse_question进行处理
             link = job_info.h3.a.get('href')
             yield scrapy.Request(link,callback=self.parse_question)
             # yield item
