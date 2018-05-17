@@ -21,9 +21,9 @@ class DmozSpider(scrapy.Spider):
             total = re.search(pattern, response.body).group(1)
             for i in range(1,int(total)+1):
                 yield scrapy.Request(self.cities_url.format(page=i), callback=self.parse_question)
-        except:
+        except Exception as e:
             logging.error(traceback.format_exc())
-            print Exception
+            print e
     def parse_question(self, response):
         try:
             soups = BeautifulSoup(response.body, 'lxml')
@@ -48,6 +48,6 @@ class DmozSpider(scrapy.Spider):
                              'top2': top2, 'top2_url': top2_url, 'top3': top3, 'top3_url': top3_url, })
 
                 yield item
-        except:
+        except Exception as e :
             logging.error(traceback.format_exc())
-            print Exception
+            print e

@@ -23,9 +23,9 @@ class DmozSpider(scrapy.Spider):
                 ###获取到link,回调函数parse_question进行处理
                 link = job_info.h3.a.get('href')
                 yield scrapy.Request(link,callback=self.parse_question)
-        except:
+        except Exception as e:
             logging.error(traceback.format_exc())
-            print Exception
+            print e
 
     def parse_question(self,response):
         try:
@@ -59,7 +59,7 @@ class DmozSpider(scrapy.Spider):
             item['job_salary'] = job_salary
 
             yield item
-        except:
+        except Exception as e:
             logging.error(traceback.format_exc())
-            print Exception
+            print e
 
