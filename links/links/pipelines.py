@@ -6,13 +6,12 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
 import os
-from twisted.enterprise import adbapi  # 导入twisted的包
 import MySQLdb
 import MySQLdb.cursors
-import traceback
+import traceback,logging
+from twisted.enterprise import adbapi  # 导入twisted的包
 
 BASE_PATH = os.path.abspath('..')
-
 
 class LinksPipeline(object):
     def __init__(self,settings):
@@ -35,30 +34,30 @@ class PagesPipeline(object):
 
 
 class MSQLPipeline(object):
-    def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
-        self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                                            host='www.along.party',
-                                            db='cmdb',
-                                            user='root',
-                                            passwd='kbsonlong',
-                                            port=8080,
-                                            cursorclass=MySQLdb.cursors.DictCursor,
-                                            charset='utf8',
-                                            use_unicode=True
-                                            )
-        # pipeline dafault function                    #这个函数是pipeline默认调用的函数
+    try:
+        def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
+            self.dbpool = adbapi.ConnectionPool('MySQLdb',
+                                                host='www.along.party',
+                                                db='cmdb',
+                                                user='root',
+                                                passwd='kbsonlong',
+                                                port=8080,
+                                                cursorclass=MySQLdb.cursors.DictCursor,
+                                                charset='utf8',
+                                                use_unicode=True
+                                                )
+            # pipeline dafault function                    #这个函数是pipeline默认调用的函数
 
 
-    def process_item(self, item, spider):
-        ##配置多个爬虫spider时，通过判断爬虫名称进行下一步操作
-        if spider.name == 'liepin':
-            query = self.dbpool.runInteraction(self.insert_sql, item)
-        elif spider.name == 'mfw':
-            query = self.dbpool.runInteraction(self.do_sql, item)
-        return item
+        def process_item(self, item, spider):
+            ##配置多个爬虫spider时，通过判断爬虫名称进行下一步操作
+            if spider.name == 'liepin':
+                query = self.dbpool.runInteraction(self.insert_sql, item)
+            elif spider.name == 'mfw':
+                query = self.dbpool.runInteraction(self.do_sql, item)
+            return item
 
-    def insert_sql(self, cursor, item):
-        try:
+        def insert_sql(self, cursor, item):
             # 执行具体的插入语句,不需要commit操作,Twisted会自动进行
             insert_sql = """
                  insert into dm_job(job_url,job_name,company_name,job_desc,
@@ -70,11 +69,8 @@ class MSQLPipeline(object):
             cursor.execute(insert_sql, (item["job_url"], item["job_name"], item["company_name"],
                                         item["job_desc"], item["job_location"], item["job_edu"],
                                         item["language"], item["work_year"], item["company_desc"], item["job_salary"]))
-        except:
-            print traceback.format_exc()
 
-    def do_sql(self, cursor, item):
-        try:
+        def do_sql(self, cursor, item):
             # 执行具体的插入语句,不需要commit操作,Twisted会自动进行
             insert_sql = """
                  insert into city(cityid,city_url,city_name,nums,
@@ -87,8 +83,9 @@ class MSQLPipeline(object):
             cursor.execute(insert_sql,(item['cityid'],item['city_url'],item['city_name'],item['nums'],
                                        item['detail'],item['image'],item['top1'],item['top1_url'],
                                        item['top2'],item['top2_url'],item['top3'],item['top3_url']))
-        except:
-            print traceback.format_exc()
+    except:
+        logging.error(traceback.format_exc())
+        print Exception
 
 
 

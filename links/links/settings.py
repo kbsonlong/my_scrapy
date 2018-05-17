@@ -8,6 +8,7 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import time
 
 BOT_NAME = 'links'
 
@@ -107,3 +108,7 @@ MYSQL_PASSWORD='kbsonlong',
 MYSQL_PORT=8080,
 MYSQL_CHARSET='utf8',
 USE_UNICODE=True
+
+
+##config logging
+LOG_FILE = 'spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())

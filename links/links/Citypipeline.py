@@ -14,40 +14,32 @@ import sys,six
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+import logging
 BASE_PATH = os.path.abspath('..')
 
 class CityPipeline(object):
+    try:
+        def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
+            self.dbpool = adbapi.ConnectionPool('MySQLdb',
+                                                host='www.along.party',
+                                                db='cmdb',
+                                                user='root',
+                                                passwd='kbsonlong',
+                                                port=8080,
+                                                cursorclass=MySQLdb.cursors.DictCursor,
+                                                charset='utf8',
+                                                use_unicode=True)
+            logging.info('Connect DB Success !!')
 
-    # def __init__(self):
-    #     self.file = open(r'%s/%s' % (BASE_PATH,'job_info.json'), 'wb')
-    #
-    # def process_item(self, item, spider):
-    #     line = json.dumps(dict(item)) + "\n"
-    #     self.file.write(line)
-    #     return item
+        def process_item(self, item, spider):
+            query = self.dbpool.runInteraction(self.do_sql, item)
+            return item
 
-    def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
-        self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                                            host='www.along.party',
-                                            db='cmdb',
-                                            user='root',
-                                            passwd='kbsonlong',
-                                            port=8080,
-                                            cursorclass=MySQLdb.cursors.DictCursor,
-                                            charset='utf8',
-                                            use_unicode=True
-                                            )
-        # pipeline dafault function                    #这个函数是pipeline默认调用的函数
-    def process_item(self, item, spider):
-        query = self.dbpool.runInteraction(self.do_sql, item)
-        return item
+            # 错误处理函数
+        def handle_error(self, falure):
+            print(falure)
 
-        # 错误处理函数
-    def handle_error(self, falure):
-        print(falure)
-
-    def do_sql(self, cursor, item):
-        try:
+        def do_sql(self, cursor, item):
             table_name = 'city'
             col_str = ''
             row_str = ''
@@ -57,20 +49,11 @@ class CityPipeline(object):
                 sql = "insert INTO {} ({}) VALUES ({}) ".format(table_name, col_str[1:-1],row_str[:-1])
 
             cursor.execute(sql)
-            # # 执行具体的插入语句,不需要commit操作,Twisted会自动进行
-            # insert_sql = """
-            #      insert into city(cityid,city_url,city_name,nums,
-            #          detail,image,top1,top1_url,
-            #          top2,top2_url,top3,top3_url
-            #          )
-            #      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-            # """
-            #
-            # cursor.execute(insert_sql,(item['cityid'],item['city_url'],item['city_name'],item['nums'],
-            #                        item['detail'],item['image'],item['top1'],item['top1_url'],
-            #                        item['top2'],item['top2_url'],item['top3'],item['top3_url']))
-        except:
-            print traceback.format_exc()
+            logging.info(sql)
+
+    except Exception as error:
+        logging.error(traceback.format_exc())
+        print error
 
 
 
