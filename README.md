@@ -56,3 +56,6 @@
 
 ## [Scrapy命令行](http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/commands.html)
 https://www.cnblogs.com/weixuqin/p/8431314.html
+
+# 待学习部分
+## [分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
