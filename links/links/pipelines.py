@@ -50,6 +50,7 @@ class MSQLPipeline(object):
 
 
     def process_item(self, item, spider):
+        ##配置多个爬虫spider时，通过判断爬虫名称进行下一步操作
         if spider.name == 'liepin':
             query = self.dbpool.runInteraction(self.insert_sql, item)
         elif spider.name == 'mfw':
