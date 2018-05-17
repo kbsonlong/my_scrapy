@@ -18,12 +18,10 @@ class DmozSpider(scrapy.Spider):
         jobs = jobObj.findAll('li')
         for job in jobs:
             job_info  = job.find('div',{'class':'job-info'})
-            item = LinksItem()
-            # item['title'] = job_info.h3.get_text()
             ###获取到link,回调函数parse_question进行处理
             link = job_info.h3.a.get('href')
             yield scrapy.Request(link,callback=self.parse_question)
-            # yield item
+
 
     def parse_question(self,response):
         soups = BeautifulSoup(response.body, 'lxml')
@@ -42,9 +40,6 @@ class DmozSpider(scrapy.Spider):
             company_desc = job_info.find('div', {'class': 'info-word'}).get_text()
         except:
             company_desc = None
-        # company_address = scrapy.Field()
-        # company_worktype = scrapy.Field()
-        # company_website = scrapy.Field()
 
         item = PagesItem()
         item['job_url'] = job_url
