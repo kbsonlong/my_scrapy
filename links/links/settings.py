@@ -66,6 +66,7 @@ ROBOTSTXT_OBEY = True
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'links.pipelines.MSQLPipeline': 300,
+   # 'links.Citypipeline.CityPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -88,3 +89,12 @@ HTTPCACHE_EXPIRATION_SECS = 0
 HTTPCACHE_DIR = 'httpcache'
 HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+MYSQL_HOST='www.along.party',
+MYSQL_DB='cmdb',
+MYSQL_USER='root',
+MYSQL_PASSWORD='kbsonlong',
+MYSQL_PORT=8080,
+MYSQL_CHARSET='utf8',
+USE_UNICODE=True

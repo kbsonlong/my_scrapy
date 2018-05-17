@@ -30,3 +30,19 @@ class PagesItem(scrapy.Item):
     company_address = scrapy.Field()
     company_worktype = scrapy.Field()
     company_website = scrapy.Field()
+
+
+
+class CityItem(scrapy.Item):
+    cityid = scrapy.Field()
+    city_url = scrapy.Field()
+    city_name = scrapy.Field()
+    nums = scrapy.Field()
+    detail = scrapy.Field()
+    image = scrapy.Field()
+    top1 = scrapy.Field()
+    top1_url = scrapy.Field()
+    top2 = scrapy.Field()
+    top2_url = scrapy.Field()
+    top3 = scrapy.Field()
+    top3_url = scrapy.Field()

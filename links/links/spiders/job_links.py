@@ -38,7 +38,10 @@ class DmozSpider(scrapy.Spider):
         job_edu = job_qualifications[0].get_text()
         language = job_qualifications[2].get_text()
         work_year = job_qualifications[1].get_text()
-        company_desc = job_info.find('div', {'class': 'info-word'}).get_text()
+        try:
+            company_desc = job_info.find('div', {'class': 'info-word'}).get_text()
+        except:
+            company_desc = None
         # company_address = scrapy.Field()
         # company_worktype = scrapy.Field()
         # company_website = scrapy.Field()

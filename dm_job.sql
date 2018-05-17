@@ -15,4 +15,22 @@ CREATE TABLE IF NOT EXISTS dm_job
     company_worktype varchar(255) COMMENT '公司成立年限',
     company_scale varchar(255) COMMENT 'company scale',
     company_website varchar(255) COMMENT '公司站点'
-)
+);
+
+CREATE TABLE city(
+	cityid VARCHAR(20) PRIMARY KEY,
+	city_name VARCHAR(20),
+	city_url VARCHAR(100),
+	nums INT,
+	detail VARCHAR(200),
+	image VARCHAR(200),
+
+	top1 VARCHAR(40),
+	top1_url VARCHAR(100),
+	top2 VARCHAR(40),
+	top2_url VARCHAR(100),
+	top3 VARCHAR(40),
+	top3_url VARCHAR(100)
+);
+
+SELECT * FROM city;
