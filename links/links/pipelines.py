@@ -50,7 +50,7 @@ class MSQLPipeline(object):
 
 
     def process_item(self, item, spider):
-        if spider.name == 'links':
+        if spider.name == 'liepin':
             query = self.dbpool.runInteraction(self.insert_sql, item)
         elif spider.name == 'mfw':
             query = self.dbpool.runInteraction(self.do_sql, item)
