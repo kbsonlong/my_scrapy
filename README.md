@@ -58,4 +58,17 @@
 https://www.cnblogs.com/weixuqin/p/8431314.html
 
 # 待学习部分
-## [分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
+## [1、分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
+
+### [1.1、scrapy-redis配置](/scrapy-redis.md)
+PS 这些配置是写在Scrapy项目的settings.py中的！
+
+
+## [2、Scrapy模拟登陆](https://blog.csdn.net/sdulsj/article/details/52984874)
+
+
+## [3、Selector详解](https://www.xncoding.com/2016/03/14/scrapy-04.html)
+
+    # scrapy shell https://www.along.party/
+
+    In [38]: response.xpath('//a/@href').re(r'https://www.along.party/\?p=(.*)')
