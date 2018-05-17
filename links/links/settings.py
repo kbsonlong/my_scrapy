@@ -111,7 +111,7 @@ USE_UNICODE=True
 
 
 #Config logging
-LOG_FILE = 'spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())
+LOG_FILE = r'logs/spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())
 ####可选DEBUG,INFO,WARNING,ERROR,CRITICAL等####
 LOG_LEVEL = 'ERROR'
 ####格式化日志输出(https://blog.csdn.net/chosen0ne/article/details/7319306)####
