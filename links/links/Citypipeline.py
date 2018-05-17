@@ -10,6 +10,9 @@ from twisted.enterprise import adbapi  # 导入twisted的包
 import MySQLdb
 import MySQLdb.cursors
 import traceback
+import sys,six
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 BASE_PATH = os.path.abspath('..')
 
@@ -44,19 +47,31 @@ class CityPipeline(object):
         print(falure)
 
     def do_sql(self, cursor, item):
-        # 执行具体的插入语句,不需要commit操作,Twisted会自动进行
-        insert_sql = """
-             insert into city(cityid,city_url,city_name,nums,
-                 detail,image,top1,top1_url,
-                 top2,top2_url,top3,top3_url
-                 )
-             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) 
-        """
         try:
-            cursor.execute(insert_sql,(item['cityid'],item['city_url'],item['city_name'],item['nums'],
-                                   item['detail'],item['image'],item['top1'],item['top1_url'],
-                                   item['top2'],item['top2_url'],item['top3'],item['top3_url']))
+            table_name = 'city'
+            col_str = ''
+            row_str = ''
+            for key in item.keys():
+                col_str = col_str + " " + key + ","
+                row_str = "{}'{}',".format(row_str, item[key] if "'" not in item[key] else item[key].replace("'", "\\'"))
+                sql = "insert INTO {} ({}) VALUES ({}) ".format(table_name, col_str[1:-1],row_str[:-1])
+
+            cursor.execute(sql)
+            # # 执行具体的插入语句,不需要commit操作,Twisted会自动进行
+            # insert_sql = """
+            #      insert into city(cityid,city_url,city_name,nums,
+            #          detail,image,top1,top1_url,
+            #          top2,top2_url,top3,top3_url
+            #          )
+            #      VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            # """
+            #
+            # cursor.execute(insert_sql,(item['cityid'],item['city_url'],item['city_name'],item['nums'],
+            #                        item['detail'],item['image'],item['top1'],item['top1_url'],
+            #                        item['top2'],item['top2_url'],item['top3'],item['top3_url']))
         except:
             print traceback.format_exc()
+
+
 
 
