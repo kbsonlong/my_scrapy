@@ -51,3 +51,4 @@ class DmozSpider(scrapy.Spider):
         except Exception as e :
             logging.error(traceback.format_exc())
             print e
+            logging.error(response.url)
