@@ -18,18 +18,20 @@ import logging
 BASE_PATH = os.path.abspath('..')
 
 class CityPipeline(object):
-    try:
         def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
-            self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                                                host='www.along.party',
-                                                db='cmdb',
-                                                user='root',
-                                                passwd='kbsonlong',
-                                                port=8080,
-                                                cursorclass=MySQLdb.cursors.DictCursor,
-                                                charset='utf8',
-                                                use_unicode=True)
-            logging.info('Connect DB Success !!')
+            try:
+                self.dbpool = adbapi.ConnectionPool('MySQLdb',
+                                                    host='www.along.party',
+                                                    db='cmdb',
+                                                    user='root',
+                                                    passwd='kbsonlong',
+                                                    port=8080,
+                                                    cursorclass=MySQLdb.cursors.DictCursor,
+                                                    charset='utf8',
+                                                    use_unicode=True)
+                logging.info('Connect DB Success !!')
+            except:
+                logging.error(traceback.format_exc())
 
         def process_item(self, item, spider):
             query = self.dbpool.runInteraction(self.do_sql, item)
@@ -40,21 +42,15 @@ class CityPipeline(object):
             print(falure)
 
         def do_sql(self, cursor, item):
-            table_name = 'city'
-            col_str = ''
-            row_str = ''
-            for key in item.keys():
-                col_str = col_str + " " + key + ","
-                row_str = "{}'{}',".format(row_str, item[key] if "'" not in item[key] else item[key].replace("'", "\\'"))
-                sql = "insert INTO {} ({}) VALUES ({}) ".format(table_name, col_str[1:-1],row_str[:-1])
-
-            cursor.execute(sql)
-            logging.info(sql)
-
-    except Exception as error:
-        logging.error(traceback.format_exc())
-        print error
-
-
-
-
+            try:
+                table_name = 'city'
+                col_str = ''
+                row_str = ''
+                for key in item.keys():
+                    col_str = col_str + " " + key + ","
+                    row_str = "{}'{}',".format(row_str, item[key] if "'" not in item[key] else item[key].replace("'", "\\'"))
+                    sql = "insert INTO {} ({}) VALUES ({}) ".format(table_name, col_str[1:-1],row_str[:-1])
+                cursor.execute(sql)
+                logging.info(sql)
+            except:
+                logging.error(traceback.format_exc())

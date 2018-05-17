@@ -83,6 +83,7 @@ class MSQLPipeline(object):
             cursor.execute(insert_sql,(item['cityid'],item['city_url'],item['city_name'],item['nums'],
                                        item['detail'],item['image'],item['top1'],item['top1_url'],
                                        item['top2'],item['top2_url'],item['top3'],item['top3_url']))
+            raise traceback.format_exc()
     except:
         logging.error(traceback.format_exc())
         print Exception

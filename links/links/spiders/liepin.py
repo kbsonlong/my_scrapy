@@ -8,13 +8,13 @@ from links.items import PagesItem
 
 
 class DmozSpider(scrapy.Spider):
-    try:
-        name = "liepin"
-        allowed_domains = ["liepin.com"]
-        start_urls = [
-            "https://www.liepin.com/zhaopin/?d_sfrom=search_fp_nvbar&init=1"
-        ]
-        def parse(self, response):
+    name = "liepin"
+    allowed_domains = ["liepin.com"]
+    start_urls = [
+        "https://www.liepin.com/zhaopin/?d_sfrom=search_fp_nvbar&init=1"
+    ]
+    def parse(self, response):
+        try:
             soups = BeautifulSoup(response.body,'lxml')
             jobObj = soups.find('ul',{'class':'sojob-list'})
             jobs = jobObj.findAll('li')
@@ -23,8 +23,12 @@ class DmozSpider(scrapy.Spider):
                 ###获取到link,回调函数parse_question进行处理
                 link = job_info.h3.a.get('href')
                 yield scrapy.Request(link,callback=self.parse_question)
+        except:
+            logging.error(traceback.format_exc())
+            print Exception
 
-        def parse_question(self,response):
+    def parse_question(self,response):
+        try:
             soups = BeautifulSoup(response.body, 'lxml')
             job_url = response.url
             job_info = soups.find('div', {'class': 'about-position'})
@@ -55,7 +59,7 @@ class DmozSpider(scrapy.Spider):
             item['job_salary'] = job_salary
 
             yield item
-    except:
-        logging.error(traceback.format_exc())
-        print Exception
+        except:
+            logging.error(traceback.format_exc())
+            print Exception
 

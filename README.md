@@ -45,7 +45,7 @@
 
 6、解析出的是链接（URL）,则把URL交给调度器等待抓取
 
-![image](/links/调度流程图.JPEG)
+![image](/links/liucheng.JPEG)
 
 ## [Scrapy使用要点](http://baijiahao.baidu.com/s?id=1589536251616545021&wfr=spider&for=pc)
 
