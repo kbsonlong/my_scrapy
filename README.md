@@ -50,6 +50,7 @@
 
 ## [原文描述](https://doc.scrapy.org/en/latest/topics/architecture.html#data-flow)
 ![image](/links/scrapy_architecture.png)
+
     1、The Engine gets the initial Requests to crawl from the Spider.
     2、The Engine schedules the Requests in the Scheduler and asks for the next Requests to crawl.
     3、The Scheduler returns the next Requests to the Engine.
