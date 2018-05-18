@@ -46,3 +46,11 @@ class CityItem(scrapy.Item):
     top2_url = scrapy.Field()
     top3 = scrapy.Field()
     top3_url = scrapy.Field()
+
+
+class Article(scrapy.Item):
+    title = scrapy.Field()
+    url = scrapy.Field()
+    body = scrapy.Field()
+    publish_time = scrapy.Field()
+    source_site = scrapy.Field()

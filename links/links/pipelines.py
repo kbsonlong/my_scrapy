@@ -11,6 +11,10 @@ import MySQLdb.cursors
 import traceback,logging
 from twisted.enterprise import adbapi  # 导入twisted的包
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 BASE_PATH = os.path.abspath('..')
 
 class LinksPipeline(object):
@@ -32,15 +36,16 @@ class PagesPipeline(object):
         self.file.write(line)
         return item
 
+from settings import DATABASE
 
 class MSQLPipeline(object):
         def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
             self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                                                host='www.along.party',
-                                                db='cmdb',
-                                                user='root',
-                                                passwd='kbsonlong',
-                                                port=8080,
+                                                host=DATABASE['host'],
+                                                db=DATABASE['database'],
+                                                user=DATABASE['username'],
+                                                passwd=DATABASE['password'],
+                                                port=DATABASE['port'],
                                                 cursorclass=MySQLdb.cursors.DictCursor,
                                                 charset='utf8',
                                                 use_unicode=True
@@ -93,12 +98,46 @@ class MSQLPipeline(object):
                 print e
 
 
+class ArticleDataBasePipeline(object):
+    """保存文章到数据库"""
 
+    def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
+        try:
+            self.dbpool = adbapi.ConnectionPool('MySQLdb',
+                                                host=DATABASE['host'],
+                                                db=DATABASE['database'],
+                                                user=DATABASE['username'],
+                                                passwd=DATABASE['password'],
+                                                port=DATABASE['port'],
+                                                cursorclass=MySQLdb.cursors.DictCursor,
+                                                charset='utf8',
+                                                use_unicode=True
+                                                )
+            logging.info('Connect DB Success !!')
+        except:
+            logging.error(traceback.format_exc())
 
+    def process_item(self, item, spider):
+        query = self.dbpool.runInteraction(self.do_sql, item)
+        return item
 
+        # 错误处理函数
 
+    def handle_error(self, falure):
+        print(falure)
 
-
-
-
+    def do_sql(self, cursor, item):
+        try:
+            table_name = 'articles'
+            col_str = ''
+            row_str = ''
+            for key in item.keys():
+                col_str = col_str + " " + key + ","
+                row_str = "{}'{}',".format(row_str,
+                                           item[key] if "'" not in item[key] else item[key].replace("'", "\\'"))
+                sql = "insert INTO {} ({}) VALUES ({}) ".format(table_name, col_str[1:-1], row_str[:-1])
+            cursor.execute(sql)
+            logging.info(sql)
+        except:
+            logging.error(traceback.format_exc())
 

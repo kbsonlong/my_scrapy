@@ -75,8 +75,9 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'links.pipelines.MSQLPipeline': 300,
-   # 'links.Citypipeline.CityPipeline': 300,
+   # 'links.pipelines.MSQLPipeline': 300,
+   'links.pipelines.ArticleDataBasePipeline': 301,
+   # 'links.Citypipeline.CityPipeline': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -100,14 +101,15 @@ HTTPCACHE_DIR = 'httpcache'
 HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-
-MYSQL_HOST='www.along.party',
-MYSQL_DB='cmdb',
-MYSQL_USER='root',
-MYSQL_PASSWORD='kbsonlong',
-MYSQL_PORT=8080,
-MYSQL_CHARSET='utf8',
-USE_UNICODE=True
+# windows pip install mysqlclient
+# linux pip install MySQL-python
+DATABASE = {'drivername': 'mysql',
+            'host': 'www.along.party',
+            'port': 8080,
+            'username': 'root',
+            'password': 'kbsonlong',
+            'database': 'spider_tools',
+            'query': {'charset': 'utf8'}}
 
 
 #Config logging
