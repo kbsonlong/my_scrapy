@@ -75,6 +75,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+   'links.pipelines.DuplicatesPipeline': 1,
    # 'links.pipelines.MSQLPipeline': 300,
    'links.pipelines.ArticleDataBasePipeline': 301,
    # 'links.Citypipeline.CityPipeline': 302,
@@ -109,11 +110,16 @@ DATABASE = {'drivername': 'mysql',
             'username': 'root',
             'password': 'kbsonlong',
             'database': 'spider_tools',
-            'query': {'charset': 'utf8'}}
-
+            'query': {'charset': 'utf8'}
+            }
+REDIS_CONFIG = {'host':'www.along.party',
+                'password':'*******',
+                'port':9090,
+                'db':3
+                }
 
 #Config logging
-LOG_LEVEL = logging.ERROR
+LOG_LEVEL = logging.WARN
 LOG_STDOUT = True
 LOG_FILE = r'logs/spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())
 ####可选DEBUG,INFO,WARNING,ERROR,CRITICAL等####

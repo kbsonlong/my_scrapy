@@ -5,17 +5,33 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import json
+import redis
 import os
 import MySQLdb
 import MySQLdb.cursors
 import traceback,logging
 from twisted.enterprise import adbapi  # 导入twisted的包
-
+from scrapy.exceptions import DropItem
+from settings import DATABASE,REDIS_CONFIG
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+
+Redis = redis.StrictRedis(host=REDIS_CONFIG['host'], port=REDIS_CONFIG['port'], db=REDIS_CONFIG['db'])
 BASE_PATH = os.path.abspath('..')
+
+
+class DuplicatesPipeline(object):
+    """Item去重复"""
+    def process_item(self, item, spider):
+        if Redis.exists('url:%s' % item['url']):
+            raise DropItem("Duplicate item found: %s" % item['url'])
+        else:
+            Redis.set('url:%s' % item['url'], REDIS_CONFIG['db'])
+            return item
+
+
 
 class LinksPipeline(object):
     def __init__(self,settings):
@@ -36,7 +52,7 @@ class PagesPipeline(object):
         self.file.write(line)
         return item
 
-from settings import DATABASE
+
 
 class MSQLPipeline(object):
         def __init__(self):  # 初始化连接mysql的数据库资源池相关信息
