@@ -32,6 +32,7 @@
 介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。
 
 ## Scrapy运行流程大概如下：
+![image](/links/liucheng.JPEG)
 
 1、引擎从调度器中取出一个链接(URL)用于接下来的抓取
 
@@ -45,7 +46,20 @@
 
 6、解析出的是链接（URL）,则把URL交给调度器等待抓取
 
-![image](/links/liucheng.JPEG)
+
+
+## [原文描述](https://doc.scrapy.org/en/latest/topics/architecture.html#data-flow)
+![image](/links/scrapy_architecture.png)
+    1、The Engine gets the initial Requests to crawl from the Spider.
+    2、The Engine schedules the Requests in the Scheduler and asks for the next Requests to crawl.
+    3、The Scheduler returns the next Requests to the Engine.
+    4、The Engine sends the Requests to the Downloader, passing through the Downloader Middlewares (see process_request()).
+    5、Once the page finishes downloading the Downloader generates a Response (with that page) and sends it to the Engine, passing through the Downloader Middlewares (see process_response()).
+    6、The Engine receives the Response from the Downloader and sends it to the Spider for processing, passing through the Spider Middleware (see process_spider_input()).
+    7、The Spider processes the Response and returns scraped items and new Requests (to follow) to the Engine, passing through the Spider Middleware (see process_spider_output()).
+    8、The Engine sends processed items to Item Pipelines, then send processed Requests to the Scheduler and asks for possible next Requests to crawl.
+    9、The process repeats (from step 1) until there are no more requests from the Scheduler.
+
 
 ## [Scrapy使用要点](http://baijiahao.baidu.com/s?id=1589536251616545021&wfr=spider&for=pc)
 
