@@ -111,10 +111,10 @@ USE_UNICODE=True
 
 
 #Config logging
-LOG_LEVEL = 'DEBUG'
+LOG_LEVEL = logging.ERROR
 LOG_STDOUT = True
 LOG_FILE = r'logs/spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())
 ####可选DEBUG,INFO,WARNING,ERROR,CRITICAL等####
 ####格式化日志输出(https://blog.csdn.net/chosen0ne/article/details/7319306)####
-LOG_FORMAT = '%(asctime)s - %(filename)s:%(lineno)s - %(threadName)s - %(message)s'
+LOG_FORMAT = '%(asctime)s - [%(levelname)s] - %(filename)s:%(lineno)s - %(threadName)s - %(message)s'
 
