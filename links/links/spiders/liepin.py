@@ -7,7 +7,7 @@ from links.items import LinksItem
 from links.items import PagesItem
 
 
-class DmozSpider(scrapy.Spider):
+class LpSpider(scrapy.Spider):
     name = "liepin"
     allowed_domains = ["liepin.com"]
     start_urls = [

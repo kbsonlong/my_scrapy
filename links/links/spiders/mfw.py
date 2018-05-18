@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 from links.items import CityItem
 
-class DmozSpider(scrapy.Spider):
+class MfwSpider(scrapy.Spider):
     name = "mfw"
     allowed_domains = ["mafengwo.cn"]
     site_url = 'http://www.mafengwo.cn'
@@ -19,6 +19,7 @@ class DmozSpider(scrapy.Spider):
             soups = BeautifulSoup(response.body,'lxml')
             pattern = re.compile(r'count">共(.*?)页</span>')
             total = re.search(pattern, response.body).group(1)
+            total = 3
             for i in range(1,int(total)+1):
                 yield scrapy.Request(self.cities_url.format(page=i), callback=self.parse_question)
         except Exception as e:
@@ -64,5 +65,4 @@ class DmozSpider(scrapy.Spider):
                 yield item
         except Exception as e :
             logging.error(traceback.format_exc())
-            print e
             logging.error(response.url)
