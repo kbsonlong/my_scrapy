@@ -86,5 +86,10 @@
 ## [Scrapy命令行](http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/commands.html)
 https://www.cnblogs.com/weixuqin/p/8431314.html
 
-# 待学习部分
-## [分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
+# 待完善功能
+## 1、动态配置爬虫管理后台开发
+通过flask框架开发管理后台，配置爬虫规则，配置爬取数据存放数据库信息。
+
+## [2、分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
+
+
