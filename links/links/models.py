@@ -9,6 +9,7 @@ import datetime
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
+from sqlalchemy.dialects.mysql import LONGTEXT
 from settings import DATABASE
 
 def db_connect():
@@ -68,7 +69,7 @@ class ArticleRule(Base):
             allow_url='/?p=\d+',
             extract_from='//div[@class="content"]',
             title_xpath='//h1[@class="article-title"]/a/text()',
-            body_xpath='//div[@class="post-content"]',
+            body_xpath='//article[@class="article-content"]',
             author_xpath='//span[@class="muted"][2]/a/text()'
             publish_time_xpath='//span[@class="muted"][3]',
             source_site='蜷缩的蜗牛',
@@ -84,7 +85,7 @@ class Article(Base):
     id = Column(Integer, primary_key=True)
     url = Column(String(100))
     title = Column(String(100))
-    body = Column(Text)
+    body = Column(LONGTEXT)
     author = Column(String(50))
     publish_time = Column(String(200))
     source_site = Column(String(50))

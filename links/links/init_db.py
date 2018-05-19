@@ -61,7 +61,7 @@ def init_rule():
             allow_url='/?p=\d+',
             extract_from='//div[@class="content"]',
             title_xpath='//h1[@class="article-title"]/a/text()',
-            body_xpath='//div[@class="post-content"]',
+            body_xpath='//article[@class="article-content"]',
             author_xpath='//span[@class="muted"][2]/a/text()',
             publish_time_xpath='//span[@class="muted"]/text()',
             source_site='蜷缩的蜗牛',
