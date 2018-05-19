@@ -2,7 +2,7 @@
 
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from  links.items import Article
+from  blogspider.items import Article
 
 def parse_text(extract_texts, rule_name, attr_name):
     """xpath的提取方式

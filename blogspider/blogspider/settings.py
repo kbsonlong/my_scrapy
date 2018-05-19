@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for links project
+# Scrapy settings for blogspider project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -10,14 +10,14 @@
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 import time,logging
 
-BOT_NAME = 'links'
+BOT_NAME = 'blogspider'
 
-SPIDER_MODULES = ['links.spiders']
-NEWSPIDER_MODULE = 'links.spiders'
+SPIDER_MODULES = ['blogspider.spiders']
+NEWSPIDER_MODULE = 'blogspider.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'links (+http://www.yourdomain.com)'
+#USER_AGENT = 'blogspider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -57,13 +57,13 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'links.middlewares.LinksSpiderMiddleware': 543,
+#    'blogspider.middlewares.LinksSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'links.middlewares.LinksDownloaderMiddleware': 543,
+#    'blogspider.middlewares.LinksDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -75,10 +75,10 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'links.pipelines.DuplicatesPipeline': 1,
-   # 'links.pipelines.MSQLPipeline': 300,
-   'links.pipelines.ArticleDataBasePipeline': 301,
-   # 'links.Citypipeline.CityPipeline': 302,
+   'blogspider.pipelines.DuplicatesPipeline': 1,
+   # 'blogspider.pipelines.MSQLPipeline': 300,
+   'blogspider.pipelines.ArticleDataBasePipeline': 301,
+   # 'blogspider.Citypipeline.CityPipeline': 302,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -3,8 +3,8 @@
 import scrapy
 import logging,traceback
 from bs4 import BeautifulSoup
-from links.items import LinksItem
-from links.items import PagesItem
+from blogspider.items import LinksItem
+from blogspider.items import PagesItem
 
 
 class LpSpider(scrapy.Spider):

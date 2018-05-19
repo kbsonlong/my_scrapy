@@ -6,10 +6,10 @@ from twisted.internet import reactor
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.project import get_project_settings
 from scrapy.utils.log import configure_logging
-from links.spiders.mfw import MfwSpider
-from links.spiders.liepin import LpSpider
-from links.spiders.articlespiders import ArticleSpider
-from links.models import db_connect,ArticleRule
+from blogspider.spiders.mfw import MfwSpider
+from blogspider.spiders.liepin import LpSpider
+from blogspider.spiders.articlespiders import ArticleSpider
+from blogspider.models import db_connect,ArticleRule
 
 from sqlalchemy.orm import sessionmaker
 

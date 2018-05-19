@@ -4,7 +4,7 @@ import scrapy,re
 import logging,traceback
 from bs4 import BeautifulSoup
 
-from links.items import CityItem
+from blogspider.items import CityItem
 
 class MfwSpider(scrapy.Spider):
     name = "mfw"

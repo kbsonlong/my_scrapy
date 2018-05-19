@@ -1,13 +1,13 @@
-##### 实例：[爬取猎聘网资讯](/links/links/spiders/liepin.py)
-##### 实例：[爬取蚂蜂窝旅游城市](/links/links/spiders/mfw.py)
-##### 实例：[动态配置规则爬取多个网站](/links/links/spiders/articlespiders.py)
+##### 实例：[爬取猎聘网资讯](/blogspider/blogspider/spiders/liepin.py)
+##### 实例：[爬取蚂蜂窝旅游城市](/blogspider/blogspider/spiders/mfw.py)
+##### 实例：[动态配置规则爬取多个网站](/blogspider/blogspider/spiders/articlespiders.py)
         ##初始化网站爬取规则
         cd links/links
         python init_db.py
 
 # Scrapy架构
 
-![image](/links/scrapy.png)
+![image](/blogspider/scrapy.png)
 
 ## Scrapy主要包括了以下组件：
 
@@ -36,7 +36,7 @@
 介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。
 
 ## Scrapy运行流程大概如下：
-![image](/links/liucheng.JPEG)
+![image](/blogspider/liucheng.JPEG)
 
 1、引擎从调度器中取出一个链接(URL)用于接下来的抓取
 
@@ -53,7 +53,7 @@
 
 
 ## [原文描述](https://doc.scrapy.org/en/latest/topics/architecture.html#data-flow)
-![image](/links/scrapy_architecture.png)
+![image](/blogspider/scrapy_architecture.png)
 
     1、The Engine gets the initial Requests to crawl from the Spider.
     2、The Engine schedules the Requests in the Scheduler and asks for the next Requests to crawl.
