@@ -8,7 +8,7 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-import time,logging
+import time,logging,os
 
 BOT_NAME = 'blogspider'
 
@@ -119,9 +119,10 @@ REDIS_CONFIG = {'host':'www.along.party',
                 }
 
 #Config logging
+BASE_PATH = os.path.abspath('..')
 LOG_LEVEL = logging.WARN
 LOG_STDOUT = True
-LOG_FILE = r'logs/spider_%s.log' % time.strftime("%Y-%m-%d", time.localtime())
+LOG_FILE = r'%s/logs/spider_%s.log' % (BASE_PATH,time.strftime("%Y-%m-%d", time.localtime()))
 ####可选DEBUG,INFO,WARNING,ERROR,CRITICAL等####
 ####格式化日志输出(https://blog.csdn.net/chosen0ne/article/details/7319306)####
 LOG_FORMAT = '%(asctime)s - [%(levelname)s] - %(filename)s:%(lineno)s - %(threadName)s - %(message)s'
