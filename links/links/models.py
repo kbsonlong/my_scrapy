@@ -51,6 +51,8 @@ class ArticleRule(Base):
     title_xpath = Column(String(100))
     # 文章内容xpath
     body_xpath = Column(Text)
+    #文章作者xpath
+    author_xpath = Column(String(150))
     # 发布时间xpath
     publish_time_xpath = Column(String(200))
     # 文章来源
@@ -67,7 +69,8 @@ class ArticleRule(Base):
             extract_from='//div[@class="content"]',
             title_xpath='//h1[@class="article-title"]/a/text()',
             body_xpath='//div[@class="post-content"]',
-            publish_time_xpath='//span[@class="muted"]/text()',
+            author_xpath='//span[@class="muted"][2]/a/text()'
+            publish_time_xpath='//span[@class="muted"][3]',
             source_site='蜷缩的蜗牛',
             enable=1
         )
@@ -82,9 +85,6 @@ class Article(Base):
     url = Column(String(100))
     title = Column(String(100))
     body = Column(Text)
+    author = Column(String(50))
     publish_time = Column(String(200))
     source_site = Column(String(50))
-
-if __name__ == '__main__':
-    db = db_connect()
-    create_news_table(db)

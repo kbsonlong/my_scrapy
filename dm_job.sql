@@ -34,3 +34,7 @@ CREATE TABLE city(
 );
 
 SELECT * FROM city;
+
+show TABLES
+
+SELECT * FROM article_rule

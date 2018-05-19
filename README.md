@@ -1,7 +1,9 @@
 ##### 实例：[爬取猎聘网资讯](/links/links/spiders/liepin.py)
 ##### 实例：[爬取蚂蜂窝旅游城市](/links/links/spiders/mfw.py)
 ##### 实例：[动态配置规则爬取多个网站](/links/links/spiders/articlespiders.py)
-
+        ##初始化网站爬取规则
+        cd links/links
+        python init_db.py
 
 # Scrapy架构
 
