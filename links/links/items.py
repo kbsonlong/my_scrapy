@@ -54,3 +54,4 @@ class Article(scrapy.Item):
     body = scrapy.Field()
     publish_time = scrapy.Field()
     source_site = scrapy.Field()
+    author = scrapy.Field()

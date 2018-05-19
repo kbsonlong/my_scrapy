@@ -35,6 +35,8 @@ CREATE TABLE city(
 
 SELECT * FROM city;
 
-show TABLES
+show TABLES;
 
-SELECT * FROM article_rule
+SELECT * FROM article_rule;
+
+SELECT * FROM  articles;
