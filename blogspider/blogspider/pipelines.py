@@ -157,3 +157,22 @@ class ArticleDataBasePipeline(object):
         except:
             logging.error(traceback.format_exc())
 
+
+
+from wordpress_xmlrpc import Client,WordPressPost
+from wordpress_xmlrpc.methods.posts import NewPost
+
+
+class WordPressPipeline(object):
+    def process_item(self,item,spider):
+        wp = Client('https://www.along.party/xmlrpc.php', '', '')
+        post = WordPressPost()
+        post.title = item['title']
+        # post.user = item['author']
+        # post.link = item['url']
+        # post.date = item['publish_time']
+        # post.content = item['body']
+        post.content = u"%s \n 本文转载自 <a href='%s'> %s</a> " % (item['body'], item['url'], item['title'])
+        post.post_status = 'publish'
+        wp.call(NewPost(post))
+
