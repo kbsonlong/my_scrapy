@@ -93,3 +93,6 @@ https://www.cnblogs.com/weixuqin/p/8431314.html
 ## [2、分布式爬虫Scrapy-redis](https://www.cnblogs.com/xinyangsdut/p/7631222.html)
 
 
+## [3、添加动态代理池](https://blog.csdn.net/Gooooa/article/details/74452203)
+
+

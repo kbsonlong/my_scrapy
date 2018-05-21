@@ -174,5 +174,9 @@ class WordPressPipeline(object):
         # post.content = item['body']
         post.content = u"%s \n 本文转载自 <a href='%s'> %s</a> " % (item['body'], item['url'], item['title'])
         post.post_status = 'publish'
+        post.terms_names = {
+            'post_tag': 'Python',
+            'category': 'Python'
+        }
         wp.call(NewPost(post))
 
