@@ -65,7 +65,7 @@ class ArticleRule(Base):
             name='along',
             allow_domains='along.party',
             start_urls='https://www.along.party/',
-            next_page='',
+            next_page='//div[@class="pagination"]/ul/li/a',
             allow_url='/?p=\d+',
             extract_from='//div[@class="content"]',
             title_xpath='//h1[@class="article-title"]/a/text()',
@@ -73,7 +73,7 @@ class ArticleRule(Base):
             author_xpath='//span[@class="muted"][2]/a/text()'
             publish_time_xpath='//span[@class="muted"][3]',
             source_site='蜷缩的蜗牛',
-            enable=1
+            enable=0
         )
     """
 

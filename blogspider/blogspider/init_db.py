@@ -57,7 +57,7 @@ def init_rule():
             name='along',
             allow_domains='along.party',
             start_urls='https://www.along.party/',
-            next_page='',
+            next_page='//div[@class="pagination"]/ul/li/a',
             allow_url='/?p=\d+',
             extract_from='//div[@class="content"]',
             title_xpath='//h1[@class="article-title"]/a/text()',
@@ -65,7 +65,21 @@ def init_rule():
             author_xpath='//span[@class="muted"][2]/a/text()',
             publish_time_xpath='//span[@class="muted"]/text()',
             source_site='蜷缩的蜗牛',
-            enable=1
+            enable=0
+        )
+        artile_rule4 = ArticleRule(
+            name='along',
+            allow_domains='along.party',
+            start_urls='https://www.xncoding.com/',
+            next_page='//*[@id="content"]/nav/a',
+            allow_url='/\d+/\d+/\d+/.*/.*.html',
+            extract_from='//div[@class="post-block"]',
+            title_xpath='//h1[@class="post-title"]/text()',
+            body_xpath='//div[@class="post-body"]',
+            author_xpath='//span[@class="site-title"]/text()',
+            publish_time_xpath = '//time[@itemprop="dateCreated datePublished"]/text()',
+            source_site = '会飞的污熊',
+            enable = 1
         )
         session.add(artile_rule1)
         session.add(artile_rule2)

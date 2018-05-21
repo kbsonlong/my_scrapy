@@ -24,6 +24,7 @@ class ArticleSpider(CrawlSpider):
         self.allowed_domains = rule.allow_domains.split(",")
         self.start_urls = rule.start_urls.split(",")
         rule_list = []
+
         # 添加`下一页`的规则
         if rule.next_page:
             rule_list.append(Rule(LinkExtractor(restrict_xpaths=rule.next_page)))
@@ -33,6 +34,7 @@ class ArticleSpider(CrawlSpider):
             restrict_xpaths=[rule.extract_from]),
             callback='parse_item'))
         self.rules = tuple(rule_list)
+
         super(ArticleSpider, self).__init__()
 
     def parse_item(self, response):
