@@ -168,10 +168,10 @@ class WordPressPipeline(object):
         wp = Client('https://www.along.party/xmlrpc.php', '', '')
         post = WordPressPost()
         post.title = item['title']
-        # post.user = item['author']
-        # post.link = item['url']
+        post.user = item['author']
+        post.link = item['url']
         # post.date = item['publish_time']
-        # post.content = item['body']
+        post.content = item['body']
         post.content = u"%s \n 本文转载自 <a href='%s'> %s</a> " % (item['body'], item['url'], item['title'])
         post.post_status = 'publish'
         post.terms_names = {

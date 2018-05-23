@@ -76,10 +76,10 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'blogspider.pipelines.DuplicatesPipeline': 1,   ##利用redis去重
+   # 'blogspider.pipelines.DuplicatesPipeline': 1,   ##利用redis去重
    # 'blogspider.pipelines.MSQLPipeline': 300,
-   'blogspider.pipelines.ArticleDataBasePipeline': 301,
-   # 'blogspider.pipelines.WordPressPipeline': 301,
+   # 'blogspider.pipelines.ArticleDataBasePipeline': 301,
+   'blogspider.pipelines.WordPressPipeline': 301,
    # 'blogspider.Citypipeline.CityPipeline': 302,
 }
 

@@ -38,7 +38,7 @@ class ArticleSpider(CrawlSpider):
         super(ArticleSpider, self).__init__()
 
     def parse_item(self, response):
-
+        print response.body
         article = Article()
         article["url"] = response.url
 
