@@ -27,8 +27,10 @@ if __name__ == '__main__':
 
     # runner.crawl(MfwSpider)
     # runner.crawl(LpSpider)
+
     for rule in rules:
         runner.crawl(ArticleSpider,rule=rule)
+        print rule.name
 
     d = runner.join()
     d.addBoth(lambda _: reactor.stop())

@@ -5,8 +5,12 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
 
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+import random
+from scrapy import signals
+import base64
+from settings import PROXIES
 
 class LinksSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -103,10 +107,7 @@ class LinksDownloaderMiddleware(object):
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-import scrapy
-from scrapy import signals
-from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
-import random
+
 
 
 
@@ -127,3 +128,17 @@ class MyUserAgentMiddleware(UserAgentMiddleware):
     def process_request(self, request, spider):
         agent = random.choice(self.user_agent)
         request.headers['User-Agent'] = agent
+        print request.headers
+        print request.url
+
+class ProxyMiddleware(object):
+    def process_request(self, request, spider):
+        proxy = random.choice(PROXIES)
+        if proxy['user_pass'] is not None:
+            request.meta['proxy'] = "http://%s" % proxy['ip_port']
+            encoded_user_pass = base64.encodestring(proxy['user_pass'])
+            request.headers['Proxy-Authorization'] = 'Basic ' + encoded_user_pass
+            print "**************ProxyMiddleware have pass************" + proxy['ip_port']
+        else:
+            print "**************ProxyMiddleware no pass************" + proxy['ip_port']
+            request.meta['proxy'] = "http://%s" % proxy['ip_port']

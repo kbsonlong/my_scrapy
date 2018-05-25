@@ -22,13 +22,15 @@ NEWSPIDER_MODULE = 'blogspider.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+COOKIES_ENABLES=False
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 30
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -64,7 +66,8 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddleware.useragent.UserAgentMiddleware': None,
-    'blogspider.middlewares.MyUserAgentMiddleware': 543,
+    'blogspider.middlewares.MyUserAgentMiddleware': 1,
+    'blogspider.middlewares.ProxyMiddleware': 100,
 }
 
 # Enable or disable extensions
@@ -76,10 +79,10 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'blogspider.pipelines.DuplicatesPipeline': 1,   ##利用redis去重
+   'blogspider.pipelines.DuplicatesPipeline': 1,   ##利用redis去重
    # 'blogspider.pipelines.MSQLPipeline': 300,
-   # 'blogspider.pipelines.ArticleDataBasePipeline': 301,
-   'blogspider.pipelines.WordPressPipeline': 301,
+   'blogspider.pipelines.ArticleDataBasePipeline': 301,
+   # 'blogspider.pipelines.WordPressPipeline': 301,
    # 'blogspider.Citypipeline.CityPipeline': 302,
 }
 
@@ -167,3 +170,12 @@ MY_USER_AGENT = [
     "Mozilla/5.0 (X11; U; Linux x86_64; zh-CN; rv:1.9.2.10) Gecko/20100922 Ubuntu/10.10 (maverick) Firefox/3.6.10",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
     ]
+
+PROXIES = [
+    {'ip_port': '111.11.228.75:80', 'user_pass': ''},
+    {'ip_port': '120.198.243.22:80', 'user_pass': ''},
+    {'ip_port': '111.8.60.9:8123', 'user_pass': ''},
+    {'ip_port': '101.71.27.120:80', 'user_pass': ''},
+    {'ip_port': '122.96.59.104:80', 'user_pass': ''},
+    {'ip_port': '122.224.249.122:8088', 'user_pass': ''},
+]
