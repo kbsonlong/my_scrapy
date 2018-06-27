@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+       <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+       <script>
+           function show_btc (data) {
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                var TL = data.TL;
+                var PL = data.PL;
+                option = null;
+                option = {
+                    title: {
+                        text: data.name + '价格走势图($)'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: [{
+                           type: 'category',
+                           boundaryGap: false,
+                           data: TL
+                       }],
+                    yAxis: [
+                       {
+                           type: 'value'
+                       }],
+                    series: [
+                       {
+                           name: data.name,
+                           type: 'line',
+                           symbolSize:0,
+                           stack: 'Price',
+                           data: PL
+                       },],
+                    dataZoom: [
+                        {
+                            type: 'slider',
+                            show: true,
+                            xAxisIndex: [0],
+                            start: 1
+                        },
+                        {
+                            type: 'inside',
+                            xAxisIndex: [0],
+                            start: 1,
+                            end: 35
+                        }
+                    ],
+                };
+
+                if (option && typeof option === "object") {
+                   myChart.setOption(option, true);
+                }
+           }
+       </script>
+       <script>
+           // //页面加载时默认加载
+            $(document).ready(function(data,status){
+                $.ajax({
+                    url: '/select',
+                    data:{
+                        name: $('#name').val().defaultValue = "Bytom"
+                    },
+                    dataType: 'JSON',
+                    type: 'GET',
+                    success: function(data){
+
+                        show_btc (data)
+                    }
+                });
+            });
+
+            //点击查询按钮时触发
+            $(document).ready(function(){
+                $("button#search").click(function(){
+                    $.ajax({
+                    url: '/select',
+                    data:{
+                        name:$('#name').val()
+                    },
+                    dataType: 'JSON',
+                    type: 'GET',
+                    success: function(data){
+                        show_btc (data)
+                    }
+                });
+                });
+            });
+        </script>
+
+
+
+   </head>
+   <body style="height: 100%; margin: 0">
+   <input type="text" id='name' size="5" name="name" Value="Bytom">
+   <button class="btn btn-success" id="search">提交</button>
+   <div id="container" style="height: 50%;width:720px"></div>
+
+   </body>
+</html>
