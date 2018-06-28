@@ -61,7 +61,8 @@ def get_results(url,encoding='utf-8'):
         else:
             zh_name = name
         volume = result['volume_ex']
-        T = [x for x in [rankd,name,price,zh_name,volume]]
+        symbol = result['symbol']
+        T = [x for x in [rankd,name,price,zh_name,volume,symbol]]
         LT.append(T)
     return LT
 
@@ -71,20 +72,20 @@ def insert_db(index=500):
     url = "https://block.cc/api/v1/coin/list?size=%s&type=1h&select=volume_ex&orderby=-1" % index
     # 打开数据库连接
 
-    db = MySQLdb.connect("along_db", "root", "kbsonlong", "btchq", port=3306, charset='utf8')
+    db = MySQLdb.connect("172.96.247.193", "root", "kbsonlong", "spider_tools", port=8080, charset='utf8')
     # 使用cursor()方法获取操作游标
     cursor = db.cursor()
     ##获取行情数据列表
     LT = get_results(url)
     try:
-        sql = "INSERT INTO currency(rankd,name,price,zh_name,volume) VALUES (%s,%s,%s,%s,%s)"
+        sql = "INSERT INTO currency(rankd,name,price,zh_name,volume,symbol) VALUES (%s,%s,%s,%s,%s,%s)"
         # 执行sql语句
         cursor.executemany(sql, LT)
         # 提交到数据库执行
         db.commit()
     except Exception as e:
         # Rollback in case there is any error
-        print e
+        print traceback.format_exc()
         db.rollback()
     # 关闭数据库连接
     db.close()
@@ -170,7 +171,50 @@ def cron_sendmail(H="09"):
         context = get_context(index)
         sendmail(smtp_server, smtp_user, smtp_pass, subject, sendto, context=context)
 
+def select_db2():
+    # 打开数据库连接
+    # try:
+    #     name = request.args.get('name')
+    # except:
+    #     name = "Bytom"
+
+    # db = MySQLdb.connect("along_db", "root", "kbsonlong", "btchq", port=3306, charset='utf8')
+    db = MySQLdb.connect("172.96.247.193", "root", "kbsonlong", "spider_tools", port=8080, charset='utf8')
+
+    # 使用cursor()方法获取操作游标
+    cursor = db.cursor()
+    ##获取行情数据列表
+    try:
+        sql = 'SELECT name,price,create_time FROM currency  ORDER  BY  create_time limit 10'
+        # 执行sql语句
+        cursor.execute(sql)
+        # 提交到数据库执行
+        results = cursor.fetchall()
+        NameList = []
+        PriceList = []
+        TimeList = []
+        dd = []
+        for row in results:
+            PriceList.append(row[1])
+            NameList.append(row[0])
+            TimeList.append(row[2].strftime("%Y-%m-%d %H:%M:%S"))
+            d = {"create_time" :TimeList ,"price": PriceList,
+                          "name": NameList}
+
+            dd.append(d)
+        print dd
+        print len(dd)
+    except Exception as e:
+        # Rollback in case there is any error
+        print e
+        db.rollback()
+    # 关闭数据库连接
+    db.close()
+    cursor.close()
+
+
 if __name__ == '__main__':
-    insert_db()
-    cron_sendmail()
+    # insert_db()
+    # cron_sendmail()
+    select_db2()
 
