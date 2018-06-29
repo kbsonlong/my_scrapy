@@ -20,10 +20,22 @@
                 var app = {};
                 var TL = data.TL;
                 var PL = data.PL;
+                var series=[];
+                for(var i = 0;i<PL.length;i++){
+                    var prices = PL[i].prices;
+                    series.push({
+                        name: PL[i].name,
+                        type: 'line',
+                        stack: '总量',
+                        symbolSize:0,
+                        // data:[120, 132, 101, 134, 90, 230, 210]
+                        data: prices
+                    });
+                }
                 option = null;
                 option = {
                     title: {
-                        text: data.name + '价格走势图($)'
+                        text: '价格走势图($)'
                     },
                     tooltip: {
                         trigger: 'axis'
@@ -48,14 +60,7 @@
                        {
                            type: 'value'
                        }],
-                    series: [
-                       {
-                           name: data.name,
-                           type: 'line',
-                           symbolSize:0,
-                           stack: 'Price',
-                           data: PL
-                       },],
+                    series: series,
                     dataZoom: [
                         {
                             type: 'slider',
@@ -81,9 +86,9 @@
            // //页面加载时默认加载
             $(document).ready(function(data,status){
                 $.ajax({
-                    url: '/select',
+                    url: '/select2',
                     data:{
-                        name: $('#name').val().defaultValue = "Bytom"
+                        limit: $('#limit').val().defaultValue = 10
                     },
                     dataType: 'JSON',
                     type: 'GET',
@@ -98,9 +103,9 @@
             $(document).ready(function(){
                 $("button#search").click(function(){
                     $.ajax({
-                    url: '/select',
+                    url: '/select2',
                     data:{
-                        name:$('#name').val()
+                        limit:$('#limit').val()
                     },
                     dataType: 'JSON',
                     type: 'GET',
@@ -116,7 +121,7 @@
 
    </head>
    <body style="height: 100%; margin: 0">
-   <input type="text" id='name' size="5" name="name" Value="Bytom">
+   <input type="text" id='limit' size="5" name="limit" Value=10>
    <button class="btn btn-success" id="search">提交</button>
    <div id="container" style="height: 50%;width:720px"></div>
 

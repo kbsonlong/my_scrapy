@@ -202,8 +202,6 @@ def select_db2():
                           "name": NameList}
 
             dd.append(d)
-        print dd
-        print len(dd)
     except Exception as e:
         # Rollback in case there is any error
         print e
@@ -213,8 +211,45 @@ def select_db2():
     cursor.close()
 
 
+def mult_select():
+    db = MySQLdb.connect("172.96.247.193", "root", "kbsonlong", "spider_tools", port=8080, charset='utf8')
+    # 使用cursor()方法获取操作游标
+    cursor = db.cursor()
+    ##获取行情数据列表
+    sql = "SELECT name from currency ORDER BY create_time LIMIT 10"
+    cursor.execute(sql)
+    # 提交到数据库执行
+    names = cursor.fetchall()
+    L=[]
+    try:
+        for name in names:
+
+            sql = '''SELECT price,create_time FROM currency WHERE NAME = "%s"
+            AND create_time  ORDER BY create_time ''' % (name[0])
+            # print sql
+            # 执行sql语句
+            cursor.execute(sql)
+            # 提交到数据库执行
+            results = cursor.fetchall()
+            TimeList = []
+            PriceList = []
+            for row in results:
+                TimeList.append(row[1].strftime("%Y-%m-%d %H:%M:%S"))
+                PriceList.append(row[0])
+            dd = {'PL':PriceList,'name':name[0]}
+            L.append(dd)
+    except Exception as e:
+        print e
+        db.rollback()
+    finally:
+        # 关闭数据库连接
+        db.close()
+        cursor.close()
+    return json.dumps({"DL":L,"TL":TimeList})
+
+
 if __name__ == '__main__':
     # insert_db()
     # cron_sendmail()
-    select_db2()
+    mult_select()
 

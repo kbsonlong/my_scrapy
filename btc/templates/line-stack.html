@@ -55,6 +55,13 @@
                            symbolSize:0,
                            stack: 'Price',
                            data: PL
+                       },
+                    {
+                           name: "IOTA",
+                           type: 'line',
+                           symbolSize:0,
+                           stack: 'Price',
+                           data: [0.969796,0.967883,0.967508,0.967695,0.967812,0.967058,0.967069,0.967337,0.967337,0.967068,0.967317]
                        },],
                     dataZoom: [
                         {
@@ -83,7 +90,9 @@
                 $.ajax({
                     url: '/select',
                     data:{
-                        name: $('#name').val().defaultValue = "Bytom"
+                        name: $('#name').val().defaultValue = "Bytom",
+                        start_time:$('#start_time').val(),
+                        end_time:$('#end_time').val()
                     },
                     dataType: 'JSON',
                     type: 'GET',
@@ -100,7 +109,9 @@
                     $.ajax({
                     url: '/select',
                     data:{
-                        name:$('#name').val()
+                        name:$('#name').val(),
+                        start_time:$('#start_time').val(),
+                        end_time:$('#end_time').val()
                     },
                     dataType: 'JSON',
                     type: 'GET',
@@ -117,9 +128,10 @@
    </head>
    <body style="height: 100%; margin: 0">
    <input type="text" id='name' size="5" name="name" Value="Bytom">
-   <input type="datetime-local" name="start_time"/>
-   <input type="datetime-local" name="end_time"/>
+   <input type="datetime-local" id="start_time" value="2018-01-01T00:00:00"/>
+   <input type="datetime-local" id="end_time" value="2018-06-28T23:59:59"/>
    <button class="btn btn-success" id="search">查询</button>
+
    <div id="container" style="height: 50%;width:720px"></div>
 
    </body>
